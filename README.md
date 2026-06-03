@@ -110,7 +110,7 @@ WebSocket 服务支持以下实时消息类型：
 6. **Redis缓存**: 用于存储验证码等临时数据
 
 
-# IM项目后端介绍
+# IM项目前端介绍
 
 ## 技术栈
 - Vue 3 + TypeScript
@@ -149,3 +149,40 @@ src/
 - **HTTP封装**: 自动添加Token，处理过期重定向
 - **WebSocket**: 实时消息推送
 - **路由**: 嵌套路由结构
+
+
+
+
+# IM项目agent部分介绍
+
+
+## 项目简介
+
+这是一个基于 **FastAPI + LangChain Agent** 的 AI 聊天助手项目，包含三个核心模块。
+
+
+## 依赖
+
+```
+fastapi
+uvicorn
+langchain
+langchain-community
+langgraph
+pydantic
+requests
+```
+
+## 环境变量
+
+```
+deepseek_key=your_deepseek_api_key
+```
+
+## 项目说明
+
+| 文件 | 说明 |
+|------|------|
+| `main.py` | FastAPI 聊天服务入口 |
+| `request.py` | HTTP 请求封装 |
+| `tool.py` | LangChain 工具集（好友管理、消息发送） |
