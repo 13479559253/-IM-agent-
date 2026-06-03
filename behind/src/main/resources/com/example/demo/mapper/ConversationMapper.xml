@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ConversationMapper">
+    <insert id="conversationNew" keyProperty="id" useGeneratedKeys="true">
+        insert into conversation (type,last_message,last_time,create_time,title)
+        values (#{type},#{lastMessage},#{lastTime},#{createTime},#{title})
+    </insert>
+
+    <update id="newMessage">
+        update conversation set
+            last_message = #{content},
+            last_time = #{sendTime}
+        where id = #{conversationId}
+    </update>
+    <select id="getConversationById" resultType="com.example.demo.pojo.Conversation">
+        select * from conversation where id = #{conversationId}
+    </select>
+    <delete id="deleteConversation">
+        delete from conversation where id = #{conversationId}
+    </delete>
+</mapper>

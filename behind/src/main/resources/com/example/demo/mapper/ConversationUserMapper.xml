@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ConversationUserMapper">
+    <select id="getUsersId">
+        select user_id from conversation_user where conversation_id = #{conversationId}
+    </select>
+    <insert id="conversationUserNew">
+        insert into conversation_user (conversation_id,user_id,unread_count) values (#{conversationId},#{userId},#{count})
+    </insert>
+    <select id="getConversation" resultType="com.example.demo.pojo.DTO.conversationDTO">
+        select cu.conversation_id,cu.unread_count,c.last_message,c.last_time,u.nickname
+            from conversation_user as cu left join conversation as c on cu.conversation_id = c.id
+            left join conversation_user as other on cu.conversation_id = other.conversation_id and cu.user_id != other.user_id
+            left join user as u on other.user_id = u.id
+            where cu.user_id = #{userId};
+    </select>
+    <update id="clearUnreadCount">
+        update conversation_user set
+            unread_count = 0
+        where conversation_id = #{conversationId} and user_id = #{userId}
+    </update>
+    <update id="addUnreadCount">
+        update conversation_user set
+            unread_count = unread_count + 1
+        where user_id != #{senderId} and conversation_id = #{conversationId}
+    </update>
+    <delete id="deleteConversationUser">
+        delete from conversation_user where conversation_id = #{conversationId}
+    </delete>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <insert id="register">
+        insert into user (phone,password,last_login_time,create_time,update_time,nickname)
+            values (#{phone},#{password},#{lastLoginTime},#{createTime},#{updateTime},'用户')
+    </insert>
+    <select id="selectByPhone" resultType="com.example.demo.pojo.User">
+        select * from user where phone = #{phone}
+    </select>
+    <select id="getUserInfo">
+        select id,phone,nickname,email from user
+        <where>
+            <if test="userId != null">
+                id = #{userId}
+            </if>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+        </where>
+    </select>
+    <update id="updateUserInfo">
+        update user set
+            nickname = #{nickname},
+            email =  #{email}
+        where id = #{id};
+    </update>
+</mapper>
